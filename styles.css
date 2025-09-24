@@ -26,6 +26,12 @@ header, footer {
     font-size: 0.9em;
 }
 
+#symbol {
+    margin-left: 15px;
+    color: rgb(170,221,249);
+    font-size: 25px;
+}
+
 header h1 {
     margin: 0;
     font-size: 2.6em;

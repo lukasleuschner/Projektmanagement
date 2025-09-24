@@ -37,17 +37,25 @@ export function collectAnswers(formId) {
 
 export function evaluateAnswers(answers, correctAnswers) {
   let score = 0;
+  const wrongQuestions = [];
   const keys = Object.keys(correctAnswers);
   keys.forEach(key => {
     const correct = correctAnswers[key];
+    let isCorrect = false;
     if (Array.isArray(correct)) {
       const normalized = correct.map(val => val.toLowerCase());
-      if (normalized.includes(answers[key])) score++;
-    } else if (answers[key] === correct) {
+      isCorrect = normalized.includes(answers[key]);
+    } else {
+      isCorrect = answers[key] === correct;
+    }
+
+    if (isCorrect) {
       score++;
+    } else {
+      wrongQuestions.push(key);
     }
   });
-  return { score, total: keys.length };
+  return { score, total: keys.length, wrongQuestions };
 }
 
 export function initQuiz(formId, correctAnswers) {
@@ -57,7 +65,7 @@ export function initQuiz(formId, correctAnswers) {
     const answers = collectAnswers(formId);
     const result = evaluateAnswers(answers, correctAnswers);
     if (result.score < result.total) {
-      showResultPopup(result.score, result.total);
+      showResultPopup(result.score, result.total, result.wrongQuestions);
     } else {
       const pageName = window.location.pathname
         .split('/')
@@ -68,7 +76,29 @@ export function initQuiz(formId, correctAnswers) {
   });
 }
 
-function showResultPopup(score, total) {
+function formatWrongQuestions(wrongQuestions) {
+  if (!wrongQuestions.length) return '';
+
+  const numbers = wrongQuestions
+    .map(questionKey => {
+      const match = questionKey.match(/\d+/);
+      return match ? parseInt(match[0], 10) : questionKey;
+    })
+    .filter(Boolean);
+
+  if (!numbers.length) return '';
+
+  const [first, ...rest] = numbers;
+  if (!rest.length) return `Frage ${first}`;
+  if (rest.length === 1) return `Frage ${first} und ${rest[0]}`;
+
+  const middle = rest.slice(0, -1).join(', ');
+  const last = rest[rest.length - 1];
+  const middlePart = middle ? `, ${middle}` : '';
+  return `Frage ${first}${middlePart} und ${last}`;
+}
+
+function showResultPopup(score, total, wrongQuestions = []) {
   const overlay = document.createElement('div');
   overlay.className = 'quiz-modal-overlay';
 
@@ -83,8 +113,16 @@ function showResultPopup(score, total) {
   const message = document.createElement('p');
   message.textContent = `Du hast ${score} / ${total} Fragen richtig beantwortet. Versuche es noch einmal!`;
 
+  const wrongInfoText = formatWrongQuestions(wrongQuestions);
+  let wrongInfo = null;
+  if (wrongInfoText) {
+    wrongInfo = document.createElement('p');
+    wrongInfo.textContent = `Falsche Antworten bei: ${wrongInfoText}`;
+  }
+
   modal.appendChild(close);
   modal.appendChild(message);
+  if (wrongInfo) modal.appendChild(wrongInfo);
   overlay.appendChild(modal);
 
   overlay.addEventListener('click', e => {

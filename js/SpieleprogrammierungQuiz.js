@@ -4,7 +4,7 @@ const correctAnswers = {
   question1: 'd',
   question2: 'c',
   question3: 'd',
-  question4: ['unity', 'uniti'],
+  question4: ['x, y, z', 'x y z', 'xyz'],
   question5: 'a'
 };
 

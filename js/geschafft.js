@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reward: { url: 'Goodies/3D-Veranstaltungen/3D-Veranstaltung Goodies.zip', text: 'Digitale Belohnung herunterladen' },
       images: [
         'Goodies/3D-Veranstaltungen/Laptop Wallpaper Handy 4K.png',
-        'Goodies/3D-Veranstaltungen/Krabbe Sticker.png',
+        'Goodies/Audioproduktion/Herz Sticker.png',
       ],
       stickerlink: { url: 'https://sticker.ly/s/L2MM92', text: 'Link zu Sticker.ly' },
       raum: 'A112',
@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
       reward: { url: 'Goodies/Audioproduktion/Audioproduktion.zip', text: 'Digitale Belohnung herunterladen' },
       images: [
         'Goodies/Audioproduktion/Welli Wallpaper Handy 4K.png',
-        'Goodies/Audioproduktion/Herz Sticker.png',
+        'Goodies/3D-Veranstaltungen/Krabbe Sticker.png',
+        
 
 
       ],
@@ -156,14 +157,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const content = contentMap[origin];
   if (content) {
     // Info
+    /*
     if (content.info && content.info.url && content.info.url !== '#') {
       const link = document.createElement('a');
       link.href = content.info.url;
       link.textContent = content.info.text || content.info.url;
       link.target = "_blank";
       link.rel = "noopener";
+      link.style.color = "rgb(170,221,249)";
       infoLink.appendChild(link);
-    }
+    } */ 
 
     // Reward-Download
     if (content.reward && content.reward.url && content.reward.url !== '#') {
@@ -172,20 +175,24 @@ document.addEventListener('DOMContentLoaded', () => {
       link.textContent = content.reward.text || content.reward.url;
       link.target = "_blank";
       link.rel = "noopener";
+      link.style.color = "rgb(170,221,249)";
+      
       rewardLink.appendChild(link);
     }
 
     // Sticker-Link
     if (content.stickerlink && content.stickerlink.url) {
-      const label = document.createElement('div');
-      label.textContent = 'Sticker-Pack:';
+      const label = document.createElement('span');
+      label.textContent = 'Sticker über Sticker.ly hinzufügen:';
       label.style.marginTop = '12px';
+      label.style.marginRight = '5px';
 
       const link = document.createElement('a');
       link.href = content.stickerlink.url;
       link.textContent = content.stickerlink.text || content.stickerlink.url;
       link.target = "_blank";
       link.rel = "noopener";
+      link.style.color = "rgb(170,221,249)";
 
       stickerLink.appendChild(label);
       stickerLink.appendChild(link);
