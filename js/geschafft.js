@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     '3D-Veranstaltungen': {
       info: { url: 'https://hs-flensburg.de/studieninteressierte/angebot/bachelor/AI', text: 'Studiengang: Angewandte Informatik' },
-      reward: { url: 'Goodies/3D-Veranstaltungen/3D-Veranstaltungen Goodies.zip', text: 'Digitale Belohnung herunterladen' },
+      reward: { url: 'Goodies/3D-Veranstaltungen/3D-Veranstaltung Goodies.zip', text: 'Digitale Belohnung herunterladen' },
       images: [
         'Goodies/3D-Veranstaltungen/Laptop Wallpaper Handy 4K.png',
         'Goodies/3D-Veranstaltungen/Krabbe Sticker.png',
